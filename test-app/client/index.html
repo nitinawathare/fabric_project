@@ -1,0 +1,152 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stamp Paper Application</title>
+    <link rel="icon" href="favicon.png" type="image/gif">
+
+    <!-- require jquery and bootstrap scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    
+    <!-- adding style here -->
+    <style type="text/css">
+      header{
+        background-color: lightgray;
+        font-size:20px;
+        padding:15px;
+      }
+      header, .form-group{
+        margin-bottom: 3%;
+      }
+      .form-group{
+        width:50%;
+      }
+      #body{
+        margin-left:3%;
+        margin-right:3%;
+      }
+      .form-control{
+        margin: 8px;
+      }
+      #right_header{
+        width:20%;
+        font-size:15px;
+        margin-right:0px;
+      }
+      #left_header{
+        margin-left:0;
+        width:40%;
+        display:inline-block;
+      } 
+      #id {
+        width:49%;
+        display: inline-block;
+      }
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body ng-app="application" ng-controller="appController">
+    <header>
+      <div id="left_header">Stamp Paper Application</div>
+      <i id="right_header">Blockchain Application for Minor Project COD891</i>
+    </header>
+
+    <div id="body">
+      <div class="form-group">
+        <label>Query All Stamp Papers</label>
+        <p><input id="queryAllStampPaper" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllStampPaper()"></p>
+      </div>
+ 
+      <table id="all_sp" class="table" align="center">
+
+        <tr>
+          <th>Stamp ID</th>
+          <th>Adhaar ID</th>
+          <th>Stamp Holder</th>
+          <th>Location</th>
+          <th>Document Type</th>
+          <th>Stamp Content</th>
+        </tr>
+
+        <tr ng-repeat="sp in all_sp">
+          <td>{{sp.stampid}}</td>
+          <td>{{sp.uid}}</td>
+          <td>{{sp.stamp_holder}}</td>
+          <td>{{sp.location}}</td>
+          <td>{{sp.doc_type}}</td>
+          <td>{{sp.doc_content}}</td>
+        </tr>
+      </table>
+
+      <div class="form-group">
+        <label>Query a Specific Stamp Paper ID</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Stamp Paper ID</h5>
+        
+        Enter a Stamp ID: <input id="createName" class="form-control" type="text" placeholder="Ex: 1001" ng-model="stamp_id">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryStampPaper()">
+      </div>
+
+      <table id="query_sp" class="table" align="center">
+
+        <tr>
+          <th>Stamp ID</th>
+          <th>Adhaar ID</th>
+          <th>Stamp Holder</th>
+          <th>Location</th>
+          <th>Document Type</th>
+          <th>Stamp Content</th>
+        </tr>
+
+        <tr>
+          <td>{{query_sp.stampid}}</td>
+          <td>{{query_sp.uid}}</td>
+          <td>{{query_sp.stamp_holder}}</td>
+          <td>{{query_sp.location}}</td>
+          <td>{{query_sp.doc_type}}</td>
+          <td>{{query_sp.doc_content}}</td>
+        </tr>
+      </table>
+
+      <div class="form-group">
+        <label>Create Stamp Paper Record</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_stamp}}</h5>
+        <br>
+        Enter Stamp ID: <input class="form-control" type="text" placeholder="Ex: 1001" ng-model="stamp.stampid">
+        Enter Adhaar ID : <input class="form-control" type="text" placeholder="Ex: 2345678909" ng-model="stamp.uid">
+        Enter creator's name: <input id="createName" class="form-control" type="text" placeholder="Ex: Ram Kumar Singh" ng-model="stamp.stamp_holder"> 
+        Enter location: <input id="createName" class="form-control" type="text" placeholder="Ex: New Delhi" ng-model="stamp.location">
+        Enter document type: <input class="form-control" type="text" placeholder="Ex: Land Registration" ng-model="stamp.doc_type">
+        Enter document content: <input class="form-control" type="text" placeholder="Ex: Document details" ng-model="stamp.doc_content">
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="recordStamp()"> 
+      </div>
+
+      <div class="form-group">
+        <label>Change Stamp Paper Holder</label><br>
+        <h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_holder}}</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>
+        Enter a stamp paper ID: <input class="form-control" name="assetSelect" placeholder="Ex: 1" ng-model="holder.id">
+        Enter name of the stamp holder: <input class="form-control" name="assetSelect" placeholder="Ex: Barry" ng-model="holder.name">
+        <input id="transferSubmit" type="submit" value="Change" class="btn btn-primary" ng-click="changeHolder()">
+      </div>
+
+    </div>
+  </body>
+    <!-- requiring the angular page -->
+    <script type="text/javascript" src="app.js"> </script>
+</html>
